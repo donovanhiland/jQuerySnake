@@ -11,15 +11,17 @@ $(document).ready(function() {
 
 
   function initiateGameWindow() {
-    $('.game-window').html("");
+
+    var gameWindow = $('.game-window');
+    gameWindow.html("");
     for (var r=0;r<20;r++){
       for (var c=0;c<20;c++){
-      	$('.game-window').append('<div class=cellSquare id=cell_'+r+'_'+c+'></div>');
+      	gameWindow.append('<div class=cell-square id=cell_'+r+'_'+c+'></div>');
       }
     }
-    $("#cell_0_0").addClass("snakeCell");
-    $("#cell_0_1").addClass("snakeCell");
-    $("#cell_0_2").addClass("snakeCell");
+    $("#cell_0_0").addClass("snake-cell");
+    $("#cell_0_1").addClass("snake-cell");
+    $("#cell_0_2").addClass("snake-cell");
     randomFood();
   }
   initiateGameWindow();
@@ -29,8 +31,11 @@ $(document).ready(function() {
     var fRow = Math.floor(Math.random() * 19);
     var fCol = Math.floor(Math.random() * 19);
     var foodCell = $('#cell_'+fRow+'_'+fCol);
-    foodCell.addClass("foodCell");
-    food='_'+fRow+'_'+fCol;
+    if (!foodCell.hasClass('snake-cell')) {
+      foodCell.addClass("food-cell");
+      food='_'+fRow+'_'+fCol;
+    }
+    else randomFood();
   };
 
   function update() {
@@ -38,7 +43,7 @@ $(document).ready(function() {
     gameStatus = 'inProgress';
     // remove tail block of snake
     var tail = snake.pop();
-    $('#cell'+tail).removeClass("snakeCell")
+    $('#cell'+tail).removeClass("snake-cell")
 
     // add head block based on direction
     var head = snake[0];
@@ -60,23 +65,23 @@ $(document).ready(function() {
     // if snake head is the same coord as food add block to tail,  add 1 to score, and generate new food block.
     if(newHead === food) {
       snake.push(tail);
-      $('#cell'+food).removeClass("foodCell")
+      $('#cell'+food).removeClass("food-cell")
       score += 1;
       randomFood();
     }
     snake.unshift(newHead);
 
     // end game if snake hits the border OR hits itself
-    if (sCol<0 || sRow<0 || sCol>19 || sRow>19 ||  $('#cell'+newHead).hasClass('snakeCell') ){
+    if (sCol<0 || sRow<0 || sCol>19 || sRow>19 ||  $('#cell'+newHead).hasClass('snake-cell') ){
     console.log('You lost !');
     snake.push(tail);
-    $('#cell'+tail).addClass("snakeCell");
-    $('#cell'+snake[1]).addClass("deadSnakeCell");
+    $('#cell'+tail).addClass("snake-cell");
+    $('#cell'+snake[1]).addClass("dead-snake-cell");
     gameStatus = 'gameover';
     return;
     }
     else {
-      $('#cell'+newHead).addClass('snakeCell');
+      $('#cell'+newHead).addClass('snake-cell');
     }
     setTimeout(function(){update()}, speed);
   }

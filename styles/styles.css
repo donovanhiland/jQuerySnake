@@ -1,17 +1,17 @@
-html, body {
+html {
   width: 100%;
   height: 100%;
-}
-
-.game-container {
-  width: 100%;
-  height: 38em;
-  padding-top: 7em;
   background-image: url('../img/hexgreen.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   text-align: center;
+  position: relative;
+}
+body {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .game-window {
@@ -21,27 +21,29 @@ html, body {
   margin: auto;
   margin-bottom: 10px;
   border: 10px solid limegreen;
-  display: inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.cellSquare {
+.cell-square {
   width: 5%;
   height: 5%;
   background: black;
   float: left;
 }
 
-.snakeCell {
+.snake-cell {
   background: #00ff0a;
   border: 1.5px solid black;
   border-radius: 5px;
 }
 
-.deadSnakeCell {
+.dead-snake-cell {
   background: blue;
 }
 
-.foodCell {
+.food-cell {
   background: white;
   border: 1px solid black;
   border-radius: 50%;
@@ -56,8 +58,4 @@ html, body {
   height: 40px;
   background: black;
   margin: auto;
-}
-
-.game-controls {
-
 }
